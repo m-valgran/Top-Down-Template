@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://glpbrfsigsio"]
+
+[ext_resource type="Script" path="res://Scenes/Character/Base/character.gd" id="1_jnwfj"]
+[ext_resource type="PackedScene" uid="uid://d3gb2u45n25f6" path="res://Scenes/Areas/Hurtbox/hurtbox.tscn" id="2_lmhid"]
+[ext_resource type="Script" path="res://Scenes/Character/Base/item_stack.gd" id="3_oloui"]
+[ext_resource type="PackedScene" uid="uid://cbvy0qnf2irsy" path="res://Scenes/Areas/SoftCollision/soft_collision.tscn" id="4_4mafg"]
+
+[node name="Character" type="CharacterBody2D"]
+collision_mask = 0
+script = ExtResource("1_jnwfj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Hurtbox" parent="." instance=ExtResource("2_lmhid")]
+
+[node name="ItemStack" type="Node2D" parent="."]
+script = ExtResource("3_oloui")
+
+[node name="CharacterController" type="Node2D" parent="."]
+
+[node name="SoftCollision" parent="." instance=ExtResource("4_4mafg")]
+
+[editable path="Hurtbox"]
+[editable path="SoftCollision"]

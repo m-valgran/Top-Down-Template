@@ -1,0 +1,139 @@
+[gd_scene load_steps=15 format=3 uid="uid://ccjoaq1yyn3u2"]
+
+[ext_resource type="PackedScene" uid="uid://glpbrfsigsio" path="res://Scenes/Character/Base/character.tscn" id="1_mifku"]
+[ext_resource type="Texture2D" uid="uid://c7t1h1awpghg5" path="res://Assets/test_character.png" id="2_vlpo7"]
+[ext_resource type="PackedScene" uid="uid://c3rmhopw1hdq3" path="res://Scenes/Items/MeleeWeapon/test_melee.tscn" id="4_hqemc"]
+[ext_resource type="Script" path="res://Scenes/Character/Player/player_controller.gd" id="5_1viqm"]
+[ext_resource type="Script" path="res://Scenes/Character/Base/animation_player.gd" id="6_07gyf"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l76i0"]
+height = 38.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0dhcs"]
+
+[sub_resource type="Animation" id="Animation_4tmbm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_4ytok"]
+resource_name = "idle_fists"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_vii3q"]
+resource_name = "idle_melee_1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_eik6j"]
+resource_name = "primary_fists"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 2]
+}
+
+[sub_resource type="Animation" id="Animation_osyrl"]
+resource_name = "primary_melee_1"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0blgi"]
+_data = {
+"RESET": SubResource("Animation_4tmbm"),
+"idle_fists": SubResource("Animation_4ytok"),
+"idle_melee_1": SubResource("Animation_vii3q"),
+"primary_fists": SubResource("Animation_eik6j"),
+"primary_melee_1": SubResource("Animation_osyrl")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tn5o5"]
+radius = 12.0
+
+[node name="Player" instance=ExtResource("1_mifku")]
+_max_health = 100
+_health = 100
+_speed = 200
+_acceleration = 25
+_friction = 25
+
+[node name="Sprite2D" parent="." index="0"]
+texture_filter = 1
+texture = ExtResource("2_vlpo7")
+offset = Vector2(0, -10)
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="CollisionShape2D" parent="." index="1"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_l76i0")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_0dhcs")
+
+[node name="TestMelee" parent="ItemStack" index="0" instance=ExtResource("4_hqemc")]
+
+[node name="CharacterController" parent="." index="4"]
+script = ExtResource("5_1viqm")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_0blgi")
+}
+script = ExtResource("6_07gyf")
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+shape = SubResource("CircleShape2D_tn5o5")
+
+[editable path="Hurtbox"]
+[editable path="SoftCollision"]

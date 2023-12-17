@@ -1,0 +1,118 @@
+[gd_scene load_steps=12 format=3 uid="uid://c4pgty6rh00q7"]
+
+[ext_resource type="PackedScene" uid="uid://glpbrfsigsio" path="res://Scenes/Character/Base/character.tscn" id="1_13k0s"]
+[ext_resource type="Texture2D" uid="uid://c7t1h1awpghg5" path="res://Assets/test_character.png" id="2_1ukeq"]
+[ext_resource type="Script" path="res://Scenes/Character/Bot/bot_controller.gd" id="3_o6fc8"]
+[ext_resource type="PackedScene" uid="uid://ctraf8jaecmkh" path="res://Scenes/Items/MeleeWeapon/fists.tscn" id="3_pjeom"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_niama"]
+height = 38.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rv27a"]
+
+[sub_resource type="Animation" id="Animation_c5mtm"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [3]
+}
+
+[sub_resource type="Animation" id="Animation_e4y3v"]
+resource_name = "idle_fists"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [2]
+}
+
+[sub_resource type="Animation" id="Animation_uvuob"]
+resource_name = "primary_fists"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [3, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ymil2"]
+_data = {
+"RESET": SubResource("Animation_c5mtm"),
+"idle_fists": SubResource("Animation_e4y3v"),
+"primary_fists": SubResource("Animation_uvuob")
+}
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_aup5y"]
+radius = 12.0
+
+[node name="Bot" instance=ExtResource("1_13k0s")]
+_max_health = 50
+_health = 50
+_speed = 100
+_acceleration = 15
+_friction = 15
+
+[node name="Sprite2D" parent="." index="0"]
+texture_filter = 1
+texture = ExtResource("2_1ukeq")
+offset = Vector2(0, -10)
+hframes = 2
+vframes = 2
+frame = 3
+
+[node name="CollisionShape2D" parent="." index="1"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_niama")
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_rv27a")
+
+[node name="Fists" parent="ItemStack" index="0" instance=ExtResource("3_pjeom")]
+
+[node name="CharacterController" parent="." index="4"]
+script = ExtResource("3_o6fc8")
+
+[node name="RayCast2D" type="RayCast2D" parent="CharacterController" index="0"]
+position = Vector2(-1, -1)
+target_position = Vector2(-13, -17)
+
+[node name="RayCast2D2" type="RayCast2D" parent="CharacterController" index="1"]
+position = Vector2(1, -1)
+target_position = Vector2(13, -17)
+
+[node name="RayCast2D3" type="RayCast2D" parent="CharacterController" index="2"]
+position = Vector2(0, -2)
+target_position = Vector2(0, -20)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+root_node = NodePath("../CollisionShape2D")
+libraries = {
+"": SubResource("AnimationLibrary_ymil2")
+}
+
+[node name="CollisionShape2D" parent="SoftCollision" index="0"]
+shape = SubResource("CircleShape2D_aup5y")
+
+[editable path="Hurtbox"]
+[editable path="SoftCollision"]

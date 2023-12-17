@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://dirt48evvyyp2"]
+
+[ext_resource type="PackedScene" uid="uid://ccjoaq1yyn3u2" path="res://Scenes/Character/Player/player.tscn" id="1_0eqqm"]
+[ext_resource type="Script" path="res://Scenes/Level/level.gd" id="1_dq443"]
+[ext_resource type="PackedScene" uid="uid://c4pgty6rh00q7" path="res://Scenes/Character/Bot/bot.tscn" id="2_6nu1a"]
+[ext_resource type="PackedScene" uid="uid://b0s26ea1forep" path="res://Scenes/HUD/hud.tscn" id="4_2366w"]
+[ext_resource type="PackedScene" uid="uid://sn6s146ov8ca" path="res://Scenes/Ground/ground.tscn" id="5_enmxd"]
+
+[node name="Level" type="Node"]
+script = ExtResource("1_dq443")
+
+[node name="Player" parent="." instance=ExtResource("1_0eqqm")]
+position = Vector2(383, 319)
+
+[node name="Character" parent="." instance=ExtResource("2_6nu1a")]
+position = Vector2(718, 338)
+
+[node name="HUD" parent="." instance=ExtResource("4_2366w")]
+
+[node name="Ground" parent="." instance=ExtResource("5_enmxd")]

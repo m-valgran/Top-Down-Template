@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://sn6s146ov8ca"]
+
+[ext_resource type="Script" path="res://Scenes/Ground/ground.gd" id="1_iw0td"]
+[ext_resource type="Texture2D" uid="uid://db4ypx7mstfi3" path="res://Assets/Grass.png" id="2_1iaiu"]
+
+[node name="Ground" type="ParallaxBackground"]
+script = ExtResource("1_iw0td")
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+
+[node name="TextureRect" type="TextureRect" parent="ParallaxLayer"]
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("2_1iaiu")
+stretch_mode = 1
