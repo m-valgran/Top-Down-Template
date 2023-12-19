@@ -5,7 +5,7 @@ class_name ItemStack
 @onready var _items:Array[Node] = get_children()
 @onready var _selected_item: Node = _items[0]
 
-signal primary_action_started(character_anim: String, anim_len: float)
+signal primary_action_started(character_anim: String, speed_scale: float)
 signal item_selected(character_anim: String)
 
 func _ready():
@@ -20,9 +20,10 @@ func init_items():
 
 func activate_primary_action():
 	# if selected item is melee weapon...
-	if _selected_item.try_attack():
-		var speed_scale = _selected_item._animation_player.speed_scale
-		primary_action_started.emit(_selected_item._character_anim,speed_scale)
+	if _selected_item is MeleeWeapon:
+		if _selected_item.try_attack():
+			var speed_scale = _selected_item._attack_speed
+			primary_action_started.emit(_selected_item._character_anim,speed_scale)
 
 func scroll_to_item(order: int):
 	if order:

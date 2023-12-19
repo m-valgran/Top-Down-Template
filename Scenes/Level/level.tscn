@@ -12,9 +12,9 @@ script = ExtResource("1_dq443")
 [node name="Player" parent="." instance=ExtResource("1_0eqqm")]
 position = Vector2(383, 319)
 
-[node name="Character" parent="." instance=ExtResource("2_6nu1a")]
-position = Vector2(718, 338)
-
 [node name="HUD" parent="." instance=ExtResource("4_2366w")]
 
 [node name="Ground" parent="." instance=ExtResource("5_enmxd")]
+
+[node name="Bot" parent="." instance=ExtResource("2_6nu1a")]
+position = Vector2(312, 112)

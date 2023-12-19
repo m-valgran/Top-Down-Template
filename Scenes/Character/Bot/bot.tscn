@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c4pgty6rh00q7"]
+[gd_scene load_steps=15 format=3 uid="uid://c4pgty6rh00q7"]
 
 [ext_resource type="PackedScene" uid="uid://glpbrfsigsio" path="res://Scenes/Character/Base/character.tscn" id="1_13k0s"]
 [ext_resource type="Texture2D" uid="uid://c7t1h1awpghg5" path="res://Assets/test_character.png" id="2_1ukeq"]
@@ -55,10 +55,22 @@ tracks/0/keys = {
 "values": [3, 2]
 }
 
+[sub_resource type="Animation" id="Animation_eer04"]
+resource_name = "idle"
+
+[sub_resource type="Animation" id="Animation_jl4rg"]
+resource_name = "die"
+
+[sub_resource type="Animation" id="Animation_6y7wv"]
+resource_name = "move"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ymil2"]
 _data = {
 "RESET": SubResource("Animation_c5mtm"),
+"die": SubResource("Animation_jl4rg"),
+"idle": SubResource("Animation_eer04"),
 "idle_fists": SubResource("Animation_e4y3v"),
+"move": SubResource("Animation_6y7wv"),
 "primary_fists": SubResource("Animation_uvuob")
 }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://ctraf8jaecmkh"]
+[gd_scene load_steps=11 format=3 uid="uid://ctraf8jaecmkh"]
 
 [ext_resource type="PackedScene" uid="uid://cp0fihfuw1y6q" path="res://Scenes/Items/MeleeWeapon/Base/melee_weapon.tscn" id="1_3jvsy"]
 
@@ -19,15 +19,40 @@ tracks/0/keys = {
 "values": [true, false]
 }
 
+[sub_resource type="Animation" id="Animation_ouml3"]
+resource_name = "RESET"
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_lkt2u"]
 _data = {
+"RESET": SubResource("Animation_ouml3"),
 "attack": SubResource("Animation_r7tdu")
 }
 
-[node name="Fists" node_paths=PackedStringArray("_animation_player") instance=ExtResource("1_3jvsy")]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_leqqc"]
+animation = &"attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_rpw3x"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_2wgdj"]
+
+[sub_resource type="AnimationNodeTimeScale" id="AnimationNodeTimeScale_uxp47"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_pvvst"]
+graph_offset = Vector2(-414.893, 15.1905)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_rpw3x")
+nodes/Animation/position = Vector2(-320, 100)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_leqqc")
+"nodes/Animation 2/position" = Vector2(-320, 220)
+nodes/OneShot/node = SubResource("AnimationNodeOneShot_2wgdj")
+nodes/OneShot/position = Vector2(-100, 100)
+nodes/TimeScale/node = SubResource("AnimationNodeTimeScale_uxp47")
+nodes/TimeScale/position = Vector2(100, 140)
+node_connections = [&"output", 0, &"TimeScale", &"OneShot", 0, &"Animation", &"OneShot", 1, &"Animation 2", &"TimeScale", 0, &"OneShot"]
+
+[node name="Fists" instance=ExtResource("1_3jvsy")]
 _damage = 12
 _character_anim = "fists"
-_animation_player = NodePath("AnimationPlayer")
 _attack_speed = 2.0
 
 [node name="CollisionShape2D" parent="Hitbox" index="0"]
@@ -39,5 +64,14 @@ shape = SubResource("CapsuleShape2D_73kb4")
 libraries = {
 "": SubResource("AnimationLibrary_lkt2u")
 }
+
+[node name="AnimationTree" type="AnimationTree" parent="." index="3"]
+tree_root = SubResource("AnimationNodeBlendTree_pvvst")
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/OneShot/active = false
+parameters/OneShot/internal_active = false
+parameters/OneShot/request = 0
+parameters/TimeScale/scale = 1.0
 
 [editable path="Hitbox"]
